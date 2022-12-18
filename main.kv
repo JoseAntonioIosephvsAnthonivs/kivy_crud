@@ -1,0 +1,177 @@
+#:kivy 1.9.2
+<MainWid>:
+    canvas:
+        Color:
+            rgb: 1,1,1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<StartWid>:
+    orientation: 'vertical'
+    canvas:
+        Color:
+            rgb: .3,.3,.9
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        size_hint_y: .7
+        
+    Button:
+        size_hint_y: .1
+        text: 'Farmácia App'
+        on_press: root.create_database()
+    BoxLayout:
+        size_hint_y: .2
+
+<DataWid>:
+    data: ''
+    data_id: ''
+    canvas:
+        Color:
+            rgb: 0.2,0.2,0.2
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    Label:
+        size_hint_x: 0.9
+        size_font: self.width*0.4
+        text: root.data
+    Button:
+        size_hint_x: 0.1
+        text: 'Editar'
+        on_press: root.update_data(root.data_id)
+
+<NewDataButton>:
+    font_size: self.height*0.5
+    text: 'Farmácia'
+    on_press: self.create_new_product()
+
+<DataBaseWid>:
+    canvas:
+        Color:
+            rgb: .3,.3,.9
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    ScrollView:
+        size: self.size
+        GridLayout:
+            id: container
+            padding: [10,10,10,10]
+            spacing: 5
+            size_hint_y: None
+            cols: 1
+            row_default_height: root.height*0.2
+            height: self.minimum_height
+
+<LeftLabel@Label>:
+    text_size: self.size
+    halign: 'left'
+
+<MessagePopup>:
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            id: message
+            size_hint: 1,0.8
+            text: ''
+        Button:
+            size_hint: 1,0.2
+            text: 'Regressar'
+            on_press: root.dismiss()
+
+<InsertDataWid>:
+    orientation: 'vertical'
+    canvas:
+        Color:
+            rgb: 0.2,0.2,0.2
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    LeftLabel: 
+        text: ' ID:'
+    TextInput:
+        id: ti_id
+        multiline: False
+        hint_text: 'ID'
+    LeftLabel: 
+        text: ' Nome do produto:'
+    TextInput:
+        id: ti_nome
+        multiline: False
+        hint_text: 'Nome'
+    LeftLabel: 
+        text: ' Marca do produto:'
+    TextInput:
+        id: ti_marca
+        multiline: False
+        hint_text: 'Marca'
+    LeftLabel: 
+        text: ' Valor por unidade:'
+    TextInput:
+        id: ti_valor
+        multiline: False
+        hint_text: 'Valor'
+    LeftLabel:  
+        text: ' Quantidade de produtos em estoque na Farmácia:'
+    TextInput:
+        id: ti_estoque
+        multiline: False
+    BoxLayout:
+        size_hint_y: 5
+    BoxLayout: 
+        Button:
+            text: 'Registrar produto'
+            on_press: root.insert_data()
+        Button:
+            text: 'Voltar'
+            on_press: root.back_to_dbw()
+
+<UpdateDataWid>:
+    orientation: 'vertical'
+    data_id: ''
+    canvas:
+        Color:
+            rgb: 0.2,0.2,0.2
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    LeftLabel: 
+        text: ' ID: '+root.data_id
+    LeftLabel: 
+        text: ' Nome:'
+    TextInput:
+        id: ti_nome
+        multiline: False
+        hint_text: 'Nome'
+    LeftLabel: 
+        text: ' Marca:'
+    TextInput:
+        id: ti_marca
+        multiline: False
+        hint_text: 'Marca'
+    LeftLabel: 
+        text: ' Custo por unidade:'
+    TextInput:
+        id: ti_valor
+        multiline: False
+        hint_text: 'Valor'
+    LeftLabel:  
+        text: ' Quantidade do produto em Estoque:'
+    TextInput:
+        id: ti_estoque
+        multiline: False
+    BoxLayout:
+        size_hint_y: 4
+    BoxLayout:
+        Button:
+            text: 'Atualizar'
+            on_press: root.update_data()
+        Button:
+            text: 'Eliminar'
+            on_press: root.delete_data()
+    Button: 
+        text: 'Sair'
+        on_press: root.mainwid.goto_database()
